@@ -1,0 +1,130 @@
+-- Guia 5
+CREATE DATABASE IF NOT EXISTS guia4;
+USE guia5;
+
+CREATE TABLE Departamento (
+Codigo INT(10) PRIMARY KEY,
+Nombre VARCHAR(100),
+Presupuesto DOUBLE,
+Gastos DOUBLE
+);
+
+CREATE TABLE Empleado (
+Codigo INT(10) PRIMARY KEY,
+Nif VARCHAR(9),
+Nombre VARCHAR(50),
+Apellido1 VARCHAR(50),
+Apellido2 VARCHAR(50),
+Departamento_codigo INT(10)
+FOREIGN KEY (Departamento_codigo) REFERENCES Codigo
+);
+
+INSERT INTO Departamento VALUES(1, 'Desarrollo', 120000, 6000);
+INSERT INTO Departamento VALUES(2, 'Sistemas', 150000, 21000);
+INSERT INTO Departamento VALUES(3, 'Recursos Humanos', 280000, 25000);
+INSERT INTO Departamento VALUES(4, 'Contabilidad', 110000, 3000);
+INSERT INTO Departamento VALUES(5, 'I+D', 375000, 380000);
+INSERT INTO Departamento VALUES(6, 'Proyectos', 0, 0);
+INSERT INTO Departamento VALUES(7, 'Publicidad', 0, 1000);
+INSERT INTO Empleado VALUES(1, '32481596F', 'Aarón', 'Rivero', 'Gómez', 1);
+INSERT INTO Empleado VALUES(2, 'Y5575632D', 'Adela', 'Salas', 'Díaz', 2);
+INSERT INTO Empleado VALUES(3, 'R69GE0642B', 'Adolfo', 'Rubio', 'Flores', 3);
+INSERT INTO Empleado VALUES(4, '77705545E', 'Adrián', 'Suárez', NULL, 4);
+INSERT INTO Empleado VALUES(5, '17087203C', 'Marcos', 'Loyola', 'Méndez', 5);
+INSERT INTO Empleado VALUES(6, '38382980M', 'María', 'Santana', 'Moreno', 1);
+INSERT INTO Empleado VALUES(7, '80576669X', 'Pilar', 'Ruiz', NULL, 2);
+INSERT INTO Empleado VALUES(8, '71651431Z', 'Pepe', 'Ruiz', 'Santana', 3);
+INSERT INTO Empleado VALUES(9, '56399183D', 'Juan', 'Gómez', 'López', 2);
+INSERT INTO Empleado VALUES(10, '46384486H', 'Diego','Flores', 'Salas', 5);
+INSERT INTO Empleado VALUES(11, '673892GEA', 'Marta','Herrera', 'Gil', 1);
+INSERT INTO Empleado VALUES(12, '41234836R', 'Irene','Salas', 'Flores', NULL);
+INSERT INTO Empleado VALUES(13, 'GE635162B', 'Juan Antonio','Sáez', 'Guerrero', NULL);
+
+-- Punto 1
+SELECT Apellido1 FROM Empleado;
+
+-- Punto 2
+SELECT DISTINCT Apellido1 FROM Empleado;
+
+-- Punto 3
+SELECT * FROM Empleado;
+
+-- Punto 4
+SELECT Nombre, Apellido1, Apellido2 FROM Empleado;
+
+-- Punto 5
+SELECT Departamento_codigo FROM Empleado;
+
+-- Punto 6
+SELECT DINSTINCT Departamento_codigo FROM Empleado;
+
+-- Punto 7
+SELECT CONCAT (Nombre, Apellido1, Apellido2) AS NombreCompleto FROM Empleado;
+
+-- Punto 8
+SELECT Nombre, Presupuesto = (Presupuesto - Gastos) AS PresupuestoActual FROM Departamento;
+
+-- Punto 9
+SELECT Nombre, Presupuesto = (Presupuesto - Gastos) AS PresupuestoActual FROM Departamento ASC;
+
+-- Punto 10
+SELECT Nombre FROM Departamento ASC;
+
+-- Punto 11
+SELECT Nombre FROM Departamento DESC;
+
+-- Punto 12
+SELECT Apellido1, Apellido2, Nombre FROM Empleado ORDER BY Apellido1, Apellido2, Nombre;
+
+-- Punto 13
+SELECT Nombre, Presupuesto FROM Departamento ORDER BY Presupuesto DESC LIMIT 3;
+
+-- Punto 14
+SELECT Nombre, Presupuesto FROM Departamento ORDER BY Presupuesto ASC LIMIT 3;
+
+-- Punto 15
+SELECT Nombre, Presupuesto FROM Departamento WHERE Presupuesto => 150000;
+
+-- Punto 16
+SELECT Nombre, Gastos FROM Departamento WHERE Gastos = 5000;
+
+-- Punto 17
+SELECT Nombre, Presupuesto FROM Departamento WHERE Presupuesto >= 10000 AND Presupuesto <= 200000;
+
+-- Punto 18
+SELECT Nombre, Presupuesto FROM Departamento WHERE Presupuesto BETWEEN 10000 AND 200000;
+
+-- Punto 19
+SELECT Nombre, Gastos, Presupuesto FROM Departamento WHERE Gastos > Presupuesto;
+
+-- Punto 20
+SELECT Nombre, Gastos, Presupuesto FROM Departamento WHERE Gastos < Presupuesto;
+
+-- Punto 21
+SELECT Nombre, Gastos, Presupuesto FROM Departamento WHERE Gastos = Presupuesto;
+
+-- Punto 22
+SELECT * FROM Empleado WHERE Apellido2 IS NULL;
+
+-- Punto 23
+SELECT * FROM Empleado WHERE Apellido2 IS NOT NULL;
+
+-- Punto 24
+SELECT * FROM Empleado WHERE Apellido2 = 'Lopez';
+
+-- Punto 25
+SELECT * FROM Empleado WHERE Apellido2 = 'Diaz' OR Apellido2 = 'Moreno';
+
+-- Punto 26
+SELECT * FROM Empleado WHERE Apellido2 IN ('Diaz', 'Moreno');
+
+-- Punto 27
+SELECT Nombre, Apellido1, Apellido2 FROM Empleado WHERE Departamento_codigo = 3;
+
+-- Punto 28
+SELECT Nombre, Apellido1, Apellido2 FROM Empleado WHERE Departamento_codigo = 2 OR Departamento_codigo = 4 OR Departamento_codigo = 5;
+
+-- Punto 29
+SELECT Nombre, Apellido1, Apellido2 FROM Empleado WHERE Nif LIKE '%GE%';
+
+

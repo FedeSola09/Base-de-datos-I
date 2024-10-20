@@ -1,0 +1,76 @@
+-- Guia 4
+CREATE DATABASE IF NOT EXISTS comercio;
+USE comercio;
+
+CREATE TABLE clientes (
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(100) NOT NULL,
+email VARCHAR(100) UNIQUE NOT NULL,
+telefono VARCHAR(15),
+fecha_registro DATE
+);
+
+CREATE TABLE productos (
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(100) NOT NULL,
+descripcion TEXT,
+precio DECIMAL(10, 2) NOT NULL CHECK (precio > 0),
+stock INT NOT NULL CHECK (stock >= 0)
+);
+
+CREATE TABLE pedidos (
+id INT AUTO_INCREMENT PRIMARY KEY,
+cliente_id INT NOT NULL,
+fecha_pedido DATE,
+total DECIMAL(10, 2) NOT NULL CHECK (total >= 0),
+FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+
+CREATE TABLE detalle_pedidos (
+id INT AUTO_INCREMENT PRIMARY KEY,
+pedido_id INT NOT NULL,
+producto_id INT NOT NULL,
+cantidad INT NOT NULL CHECK (cantidad > 0),
+precio_unitario DECIMAL(10, 2) NOT NULL CHECK (precio_unitario > 0),
+FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+
+-- Punto 1
+INSERT INTO clientes VALUES ('Juan Perez', 'Juan.Perez@example.com', '123456789');
+INSERT INTO clientes VALUES ('Maria Lopez', 'Maria.Lopez@example.com', '987654321');
+INSERT INTO clientes VALUES ('Carlos Gomez', 'Carlos.Gomez@example.com', '555555555');
+
+-- Punto 2
+INSERT INTO productos VALUES ('Laptop', 'Laptop de alta gama', 1500.00, 10);
+INSERT INTO productos VALUES ('Mouse', 'Mouse inalambrico', 25.00, 50);
+INSERT INTO productos VALUES ('Teclado', 'Teclado mecanico', 75.00, 30);
+INSERT INTO productos VALUES ('Monitor', 'Monitor 24 pulgadas', 200.00, 20);
+INSERT INTO productos VALUES ('Impresora', 'Impresora multifuncional', 120.00, 15);
+
+-- Punto 3
+INSERT INTO pedidos VALUES (1, 1, 1525.00);
+INSERT INTO pedidos VALUES (2, 2, 295.00);
+
+-- Punto 4
+INSERT INTO detalle_pedidos VAULES (1, 1, 1, 1500.00);
+INSERT INTO detalle_pedidos VALUES (1, 2, 1, 25.00);
+INSERT INTO detalle_pedidos VALUES (2, 3, 1, 75.00);
+
+-- Punto 5
+UPDATE clientes SET telefono = '111111111' WHERE nombre = 'Juan Perez';
+
+-- Punto 6
+UPDATE productos SET precio = precio * 1.1;
+
+-- Punto 7
+DELETE FROM productos WHERE nombre = 'Impresora';
+
+-- Punto 8
+INSERT INTO pedidos VALUES  (3, 3, 275) WHERE nombre = 'Carlos Gomez';
+
+-- Punto 9
+
+
+-- Punto 10
+DELETE FROM clientes WHERE nombre = 'Maria Lopez';
